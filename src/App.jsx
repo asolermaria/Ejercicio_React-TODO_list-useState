@@ -1,14 +1,23 @@
 import { useState } from "react";
-import TodoList from "./components/List";
+import List from "./components/List";
+import tareasFijas from "./tareas.json";
 
 function App() {
   const [input, setInput] = useState("");
-  const [tareas, setTareas] = useState([]);
+  const [tareas, setTareas] = useState(tareasFijas);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Evita que la página se recargue
-    setTareas([...tareas, input]); // Añadimos tarea al array
+    const nuevaTarea = {
+      id: Date.now(),
+      text: input,
+    };
+    setTareas([nuevaTarea, ...tareas]); // Añadimos tarea al array
     setInput(""); // Vaciamos el input cuando se envía
+  };
+
+  const resetTareas = () => {
+    setTareas(tareasFijas);
   };
 
   return (
@@ -24,7 +33,8 @@ function App() {
         />
         <button type="submit">ADD</button>
       </form>
-      <TodoList tareas={tareas} />
+      <List tareas={tareas} />
+      <button onClick={resetTareas}>RESET</button>
     </div>
   );
 }

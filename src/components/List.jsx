@@ -1,8 +1,10 @@
-function List({ tareas }) {
+import Item from "./Item";
+
+function List({ tareas, deleteTarea }) {
   return (
     <div>
-      {tareas.map((tarea, index) => (
-        <p key={index}>{tarea.text }</p>
+      {tareas.map((tarea) => (
+        <Item key={tarea.id} tarea={tarea} deleteTarea={deleteTarea} />
       ))}
     </div>
   );

@@ -1,41 +1,46 @@
 import { useState } from "react";
-import List from "./components/List";
+
 import tareasFijas from "./tareas.json";
 
-function App() {
-  const [input, setInput] = useState("");
-  const [tareas, setTareas] = useState(tareasFijas);
+import Form from "./components/Form";
+import List from "./components/List";
+import Item from "./components/Item";
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Evita que la página se recargue
+function App() {
+  const [tareas, setTareas] = useState(tareasFijas);
+  console.log(tareas);
+
+  const addTarea = (tarea) => {
     const nuevaTarea = {
       id: Date.now(),
-      text: input,
+      text: tarea,
     };
-    setTareas([nuevaTarea, ...tareas]); // Añadimos tarea al array
-    setInput(""); // Vaciamos el input cuando se envía
+    setTareas([nuevaTarea, ...tareas]);
   };
 
   const resetTareas = () => {
     setTareas(tareasFijas);
   };
 
-  return (
-    <div>
-      <h1>TO-DO APP</h1>
+  const clearTareas = () => {
+    setTareas([]);
+  };
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Escribe una tarea..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-        />
-        <button type="submit">ADD</button>
-      </form>
-      <List tareas={tareas} />
-      <button onClick={resetTareas}>RESET</button>
-    </div>
+  const deleteTarea = (id) => {
+    setTareas((prev) => prev.filter((tarea) => tarea.id !== id));
+    // prev es el último estado del hook (tareas)
+  };
+
+  return (
+    <main>
+      <h1>TO-DO APP</h1>
+      <Form
+        addTarea={addTarea}
+        resetTareas={resetTareas}
+        clearTareas={clearTareas}
+      />
+      <List tareas={tareas} deleteTarea={deleteTarea} />
+    </main>
   );
 }
 

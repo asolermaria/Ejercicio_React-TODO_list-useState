@@ -12,14 +12,16 @@ function Form({ addTarea, resetTareas, clearTareas }) {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}> 
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Escribe una tarea..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
-        <button type="submit">ADD</button>
+        {input.trim() && <button type="submit">ADD</button>}
+        {/* input.trim() si el string tiene contenido, será truthy
+            && si se cumple la primera condición (truthy), devuelve la siguiente (muestra el botón) */}
       </form>
       <button onClick={resetTareas}>RESET</button>
       <button onClick={clearTareas}>CLEAR</button>

@@ -1,6 +1,6 @@
 import Item from "./Item";
 
-function List({ tareas, deleteTarea, setTareaEditando }) {
+function List({ tareas, deleteTarea, setTareaEditando, completedTarea }) {
   return (
     <div>
       {tareas.map((tarea) => (
@@ -9,6 +9,7 @@ function List({ tareas, deleteTarea, setTareaEditando }) {
           tarea={tarea}
           deleteTarea={deleteTarea}
           setTareaEditando={setTareaEditando}
+          completedTarea={completedTarea}
         />
       ))}
     </div>

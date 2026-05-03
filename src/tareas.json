@@ -1,14 +1,17 @@
 [
   {
     "id": 1,
-    "text": "Estudiar React"
+    "text": "Estudiar React",
+    "isDone" : false
   },
   {
     "id": 2,
-    "text": "Hacer ejercicio"
+    "text": "Hacer ejercicio",
+    "isDone" : false
   },
   {
     "id": 3,
-    "text": "Comprar pan"
+    "text": "Comprar pan",
+    "isDone" : false
   }
 ]

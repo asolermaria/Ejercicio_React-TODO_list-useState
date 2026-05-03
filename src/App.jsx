@@ -23,6 +23,7 @@ function App() {
     const nuevaTarea = {
       id: uuidv4(), // Genera un identificador único aleatorio
       text: tarea,
+      isDone: false,
     };
     setTareas((prev) => [nuevaTarea, ...prev]);
     // prev es el último estado del hook (tareas)
@@ -52,8 +53,16 @@ function App() {
         tarea.id === id ? { ...tarea, text: newTexto } : tarea,
       ),
     );
-
     setTareaEditando(null);
+  };
+
+  const completedTarea = (id) => {
+    setTareas((prev) =>
+      prev.map(
+        (tarea) =>
+          tarea.id === id ? { ...tarea, isDone: !tarea.isDone } : tarea, // Cambia de true a false dependiendo el estado de la tarea
+      ),
+    );
   };
 
   return (
@@ -73,6 +82,7 @@ function App() {
         tareas={tareas}
         deleteTarea={deleteTarea}
         setTareaEditando={setTareaEditando}
+        completedTarea={completedTarea}
       />
     </main>
   );

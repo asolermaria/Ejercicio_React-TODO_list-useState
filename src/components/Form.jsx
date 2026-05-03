@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 
-function Form({ addTarea, resetTareas, clearTareas }) {
+function Form({
+  addTarea,
+  resetTareas,
+  clearTareas,
+  updateTarea,
+  tareaEditando,
+}) {
   const [input, setInput] = useState("");
   const [mensajeError, setMensajeError] = useState("");
 
@@ -15,6 +21,12 @@ function Form({ addTarea, resetTareas, clearTareas }) {
     return () => clearTimeout(timer); // Si el input cambia, reinicia el temporizador
   }, [input]); // Se ejecuta cada vez que cambia el input
 
+  useEffect(() => {
+    if (tareaEditando) {
+      setInput(tareaEditando.text);
+    }
+  }, [tareaEditando]);
+
   const handleSubmit = (e) => {
     e.preventDefault(); // Evita que la página se recargue
     if (input.trim().length < 6) {
@@ -22,7 +34,11 @@ function Form({ addTarea, resetTareas, clearTareas }) {
       return;
     }
     setMensajeError(""); // Vaciamos el mensaje de error
-    addTarea(input.trim()); // Llamamos a la función addTarea con el input quitamos espacios al principio y al final
+    if (tareaEditando) { // Si estás editando, actualiza tarea
+      updateTarea(tareaEditando.id, input.trim());
+    } else { // Si no, crea una nueva tarea
+      addTarea(input.trim());
+    } // Llamamos a la función addTarea con el input quitamos espacios al principio y al final
     setInput(""); // Vaciamos el input cuando se envía
   };
 
@@ -35,7 +51,9 @@ function Form({ addTarea, resetTareas, clearTareas }) {
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
-        {input.trim() && <button type="submit">ADD</button>}
+        {input.trim() && (
+          <button type="submit">{tareaEditando ? "GUARDAR" : "ADD"}</button>
+        )}
         {/* input.trim() si el string tiene contenido, será truthy
             && si se cumple la primera condición (truthy), devuelve la siguiente (muestra el botón) */}
         {mensajeError && <p>{mensajeError}</p>}

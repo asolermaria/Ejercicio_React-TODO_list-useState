@@ -1,10 +1,15 @@
 import Item from "./Item";
 
-function List({ tareas, deleteTarea }) {
+function List({ tareas, deleteTarea, setTareaEditando }) {
   return (
     <div>
       {tareas.map((tarea) => (
-        <Item key={tarea.id} tarea={tarea} deleteTarea={deleteTarea} />
+        <Item
+          key={tarea.id}
+          tarea={tarea}
+          deleteTarea={deleteTarea}
+          setTareaEditando={setTareaEditando}
+        />
       ))}
     </div>
   );

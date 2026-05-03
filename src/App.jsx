@@ -10,6 +10,7 @@ import Item from "./components/Item";
 function App() {
   const [tareas, setTareas] = useState([]);
   const [mensaje, setMensaje] = useState("");
+  const [tareaEditando, setTareaEditando] = useState(null);
 
   // Se ejecuta una vez cuando el componente App se carga (iniciar aplicación)
   useEffect(() => {
@@ -45,6 +46,16 @@ function App() {
     // prev es el último estado del hook (tareas)
   };
 
+  const updateTarea = (id, newTexto) => {
+    setTareas((prev) =>
+      prev.map((tarea) =>
+        tarea.id === id ? { ...tarea, text: newTexto } : tarea,
+      ),
+    );
+
+    setTareaEditando(null);
+  };
+
   return (
     <main>
       <h1>TO-DO APP</h1>
@@ -52,11 +63,17 @@ function App() {
         addTarea={addTarea}
         resetTareas={resetTareas}
         clearTareas={clearTareas}
+        updateTarea={updateTarea}
+        tareaEditando={tareaEditando}
       />
       {mensaje && <p>{mensaje}</p>}
       {/* Si hay mensaje, será truthy
           && si se cumple la primera condición (truthy), devuelve la siguiente (muestra el mensaje) */}
-      <List tareas={tareas} deleteTarea={deleteTarea} />
+      <List
+        tareas={tareas}
+        deleteTarea={deleteTarea}
+        setTareaEditando={setTareaEditando}
+      />
     </main>
   );
 }
